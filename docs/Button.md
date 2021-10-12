@@ -4,7 +4,7 @@
 
 ```tsx
 import React from 'react';
-import { Button, ButtonProps } from 'Simpler-Components';
+import { Button } from 'Simpler-Components';
 
 export default () => (
   <div>
