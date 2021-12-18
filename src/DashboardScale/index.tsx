@@ -1,0 +1,71 @@
+/*
+ * @Author: 邱彦兮
+ * @Date: 2021-12-18 17:35:49
+ * @LastEditors: 邱彦兮
+ * @LastEditTime: 2021-12-19 00:59:11
+ * @FilePath: /Simpler-Components/src/DashboardScale/index.tsx
+ */
+
+import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
+
+type DashboardScaleProps = {
+  width: number;
+  parentId: string;
+  height: number;
+  delay: number;
+};
+
+const Section = styled.section<{
+  scale: number;
+}>`
+  box-sizing: border-box;
+  position: absolute;
+  transition: transform 0.5s;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%) scale(${(props) => props.scale});
+`;
+
+function debounce(handler: any, delay: number) {
+  let timer: undefined | NodeJS.Timeout;
+  return function () {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    const _self = this;
+    timer = setTimeout(() => {
+      handler.call(_self);
+      clearTimeout(timer as NodeJS.Timeout);
+      timer = undefined;
+    }, delay);
+  };
+}
+const DashboardScale: React.FC<DashboardScaleProps> = (props) => {
+  const { width, parentId, height, delay } = props;
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    window.onresize = debounce(() => {
+      const containerNode =
+        (parentId && document.querySelector(parentId)) ||
+        document.documentElement;
+      const w = containerNode.clientWidth / width;
+      const h = containerNode.clientHeight / height;
+      setScale(w < h ? w : h);
+    }, delay);
+  }, []);
+  return (
+    <Section scale={scale}>
+      <div style={{ width: '100%', height: '100%' }}>{props.children}</div>
+    </Section>
+  );
+};
+DashboardScale.defaultProps = {
+  width: 1920,
+  height: 1080,
+  delay: 300,
+};
+export default DashboardScale;
