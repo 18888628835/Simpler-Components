@@ -1,8 +1,8 @@
-# 政务大屏适配器
+# DashboardScale 大屏适配器
 
-## 类似网易有数的大屏适配器
+## 类似网易有数的政务大屏适配器
 
-> 能够实现类似网易有数大屏的适配效果，请调整浏览器窗口大小试试。参考网址：[网易有数大屏](https://netease.youdata.163.com/dash/screenIntegration/700215255?sid=5889&token=1639845150812957311597127fedab12ce6d2)
+> 能够实现类似网易有数大屏的适配效果，请调整浏览器窗口大小试试。原型自:[网易有数大屏](https://netease.youdata.163.com/dash/screenIntegration/700215255?sid=5889&token=1639845150812957311597127fedab12ce6d2)
 
 ```tsx
 import React, { useRef } from 'react';
