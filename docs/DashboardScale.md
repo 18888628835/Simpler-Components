@@ -1,3 +1,11 @@
+<!--
+ * @Author: 邱彦兮
+ * @Date: 2021-12-18 17:57:08
+ * @LastEditors: 邱彦兮
+ * @LastEditTime: 2021-12-19 13:28:11
+ * @FilePath: /Simpler-Components/docs/DashboardScale.md
+-->
+
 # DashboardScale 大屏适配器
 
 ## 类似网易有数的政务大屏适配器
@@ -8,7 +16,7 @@
 import React, { useRef } from 'react';
 import { DashboardScale } from 'Simpler-Components';
 import styled from 'styled-components';
-import img from '../src/assets/dp.png';
+import img from '../assets/dp.png';
 const Content = styled.div`
   display: flex;
   height: 100%;
@@ -29,4 +37,4 @@ export default () => {
 
 > 支持 16:9、16：10 等各种比例,默认为 1920\*1080
 
-## API
+<API src='src/DashboardScale'></API>

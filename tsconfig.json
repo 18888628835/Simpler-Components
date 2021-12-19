@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
+    "noImplicitAny": false,
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
     "jsx": "react",
     "esModuleInterop": true,
+    "noImplicitThis": false,
     "sourceMap": true,
     "baseUrl": "./",
     "strict": true,
