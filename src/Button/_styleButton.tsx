@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Wrap = styled.button`
-  --base-color: rgba(0, 0, 0, 0.87);
+  /* --base-color: rgba(0, 0, 0, 0.87);
   --default-bg-color: #e0e0e0;
   --primary-bg-color: #1976d2;
   --danger-bg-color: rgb(220, 0, 78);
@@ -15,14 +15,14 @@ export const Wrap = styled.button`
   --outline-default-bd-color: rgba(0, 0, 0, 0.23);
   --outline-hover-bg-color: rgba(25, 118, 210, 0.04);
   --outline-danger-bd-color: rgba(220, 0, 78, 0.5);
-  --outline-danger-bg-color: rgba(220, 0, 78, 0.04);
+  --outline-danger-bg-color: rgba(220, 0, 78, 0.04); */
   /* Button默认样式 */
   &.btn {
     color: var(--base-color);
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
       0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
     position: relative;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
     font-size: 15.75px;
     display: inline-block;
     font-weight: 500;
