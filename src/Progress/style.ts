@@ -2,15 +2,17 @@
  * @Author: 邱彦兮
  * @Date: 2021-12-22 21:15:38
  * @LastEditors: 邱彦兮
- * @LastEditTime: 2021-12-24 15:46:10
+ * @LastEditTime: 2021-12-25 11:40:00
  * @FilePath: /Simpler-Components/src/Progress/style.ts
  */
+
 import styled from 'styled-components';
 const Wrap = styled.section<{
   progress: number;
   type: string;
   color: string;
   bgColor: string;
+  labelColor: string;
 }>`
   display: flex;
   align-items: center;
@@ -33,7 +35,10 @@ const Wrap = styled.section<{
     text-align: center;
     min-width: 35px;
     margin-left: 3px;
-    color: var(--label-primary-color);
+    white-space: nowrap;
+    color: ${(props) => {
+      return props.labelColor || 'var(--label-primary-color)';
+    }};
   }
   .fancy_loadingBar_bar {
     width: ${(props) => Math.min(props.progress, 100)}%;

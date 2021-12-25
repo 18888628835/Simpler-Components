@@ -4,10 +4,10 @@
   --success-bg-color: #52c41a;
   --default-bg-color: #e0e0e0;
   --primary-bg-color: #1976d2;
+  --danger-bg-color: rgb(220, 0, 78);
   --primary-container-color: rgb(167, 202, 237);
   --danger-container-color: rgba(221, 122, 156, 0.6);
-  --success-container-color: rgb(98, 185, 46, 0.3);
-  --danger-bg-color: rgb(220, 0, 78);
+  --success-container-color: rgba(98, 185, 46, 0.3);
   --disabled-bg-color: rgba(0, 0, 0, 0.12);
   --default-hover-bg-color: #d5d5d5;
   --primary-hover-bg-color: rgb(17, 82, 147);
