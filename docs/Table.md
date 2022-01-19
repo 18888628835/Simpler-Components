@@ -2,7 +2,7 @@
  * @Author: 邱彦兮
  * @Date: 2022-01-18 21:14:32
  * @LastEditors: 邱彦兮
- * @LastEditTime: 2022-01-18 22:34:58
+ * @LastEditTime: 2022-01-19 22:30:06
  * @FilePath: /Simpler-Components/docs/Table.md
 -->
 
@@ -103,5 +103,7 @@ export default () => {
   return <Table columns={columns} dataSource={dataSource} rowKey="id" />;
 };
 ```
+
+## (未完待续)
 
 <API src='src/Table'>
