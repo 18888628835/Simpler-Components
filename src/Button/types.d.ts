@@ -2,7 +2,7 @@
  * @Author: 邱彦兮
  * @Date: 2022-03-08 21:40:30
  * @LastEditors: 邱彦兮
- * @LastEditTime: 2022-03-08 22:12:36
+ * @LastEditTime: 2022-03-09 00:11:20
  * @FilePath: /Simpler-Components/src/Button/types.d.ts
  */
 

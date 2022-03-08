@@ -2,7 +2,7 @@
  * @Author: 邱彦兮
  * @Date: 2021-10-12 11:11:55
  * @LastEditors: 邱彦兮
- * @LastEditTime: 2022-03-08 22:05:18
+ * @LastEditTime: 2022-03-09 00:12:16
  * @FilePath: /Simpler-Components/src/Button/index.tsx
  */
 import classnames from 'classnames';
@@ -23,7 +23,7 @@ export type ButtonProps = Partial<
     AnchorHTMLAttributes<HTMLAnchorElement>
 >;
 
-const Button: React.FC<BaseButtonProps> = (props) => {
+const Button: React.FC<ButtonProps> = (props) => {
   const {
     className,
     disabled = false,
