@@ -1,12 +1,31 @@
+/*
+ * @Author: 邱彦兮
+ * @Date: 2021-10-12 14:28:03
+ * @LastEditors: 邱彦兮
+ * @LastEditTime: 2022-03-08 23:16:51
+ * @FilePath: /Simpler-Components/src/Switch/index.tsx
+ */
 import { FC, useState } from 'react';
 import classnames from 'classnames';
 import { Wrap, Thumb, Track } from './styleSwitch';
 import React from 'react';
 
 export type SwitchProps = {
+  /**
+   * @description change后的回调
+   */
   onChange?: (e: boolean) => void;
+  /**
+   * @description primary样式
+   */
   primary?: boolean;
+  /**
+   * @description 指定state
+   */
   status?: boolean;
+  /**
+   * @description 是否锁定
+   */
   checked?: boolean;
 };
 

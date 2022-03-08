@@ -1,3 +1,11 @@
+<!--
+ * @Author: 邱彦兮
+ * @Date: 2021-10-12 15:22:55
+ * @LastEditors: 邱彦兮
+ * @LastEditTime: 2022-03-08 22:33:05
+ * @FilePath: /Simpler-Components/docs/Input.md
+-->
+
 # Input 输入框
 
 ## 基础样式
@@ -89,3 +97,5 @@ export default () => {
   );
 };
 ```
+
+<API src='src/Input/dummy'></API>

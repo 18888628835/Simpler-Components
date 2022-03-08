@@ -1,3 +1,10 @@
+/*
+ * @Author: 邱彦兮
+ * @Date: 2021-10-12 14:45:49
+ * @LastEditors: 邱彦兮
+ * @LastEditTime: 2022-03-08 23:19:01
+ * @FilePath: /Simpler-Components/src/Transition/index.tsx
+ */
 import React from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { Wrap } from './_styleTransition';
@@ -11,7 +18,13 @@ type AnimationName =
   | 'BottomIn-TopOut';
 
 type BaseTransitionProps = {
+  /**
+   * @description 预设的动画效果
+   */
   animation?: AnimationName;
+  /**
+   * @description 是否显示
+   */
   showData: boolean;
 };
 export type TransitionProps = BaseTransitionProps & CSSTransitionProps;

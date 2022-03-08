@@ -2,7 +2,7 @@
  * @Author: 邱彦兮
  * @Date: 2021-12-18 17:35:49
  * @LastEditors: 邱彦兮
- * @LastEditTime: 2021-12-19 15:40:40
+ * @LastEditTime: 2022-03-08 21:30:52
  * @FilePath: /Simpler-Components/src/DashboardScale/index.tsx
  */
 import React, { useEffect, useState } from 'react';
@@ -24,7 +24,7 @@ function debounce(handler: any, delay: number) {
   };
 }
 const DashboardScale: React.FC<DashboardScaleProps> = (props) => {
-  const { width, parentId, height, delay } = props;
+  const { width = 1920, parentId, height = 1080, delay = 500 } = props;
   const [scale, setScale] = useState(1);
 
   useEffect(() => {
@@ -43,9 +43,5 @@ const DashboardScale: React.FC<DashboardScaleProps> = (props) => {
     </Section>
   );
 };
-DashboardScale.defaultProps = {
-  width: 1920,
-  height: 1080,
-  delay: 300,
-};
+
 export default DashboardScale;

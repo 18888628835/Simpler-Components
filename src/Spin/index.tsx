@@ -1,3 +1,10 @@
+/*
+ * @Author: 邱彦兮
+ * @Date: 2021-10-12 14:04:17
+ * @LastEditors: 邱彦兮
+ * @LastEditTime: 2022-03-08 23:10:30
+ * @FilePath: /Simpler-Components/src/Spin/index.tsx
+ */
 import classNames from 'classnames';
 import React, { FC } from 'react';
 
@@ -68,7 +75,13 @@ const Wrap = styled.div`
   }
 `;
 export type SpinProps = {
+  /**
+   * @description 开关
+   */
   flag?: boolean;
+  /**
+   * @description 标题
+   */
   title?: string;
 };
 const Spin: FC<SpinProps> = (props) => {

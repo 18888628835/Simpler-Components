@@ -1,3 +1,11 @@
+<!--
+ * @Author: 邱彦兮
+ * @Date: 2021-10-12 14:30:48
+ * @LastEditors: 邱彦兮
+ * @LastEditTime: 2022-03-08 23:15:38
+ * @FilePath: /Simpler-Components/docs/Switch.md
+-->
+
 # Switch 开关
 
 ## 两种样式
@@ -57,3 +65,5 @@ export default () => {
   );
 };
 ```
+
+<API src='src/Switch'></API>

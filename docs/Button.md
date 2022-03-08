@@ -125,3 +125,5 @@ export default () => (
   </div>
 );
 ```
+
+<API src='src/Button/dummy'></API>

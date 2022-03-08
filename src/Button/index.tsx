@@ -1,3 +1,10 @@
+/*
+ * @Author: 邱彦兮
+ * @Date: 2021-10-12 11:11:55
+ * @LastEditors: 邱彦兮
+ * @LastEditTime: 2022-03-08 22:05:18
+ * @FilePath: /Simpler-Components/src/Button/index.tsx
+ */
 import classnames from 'classnames';
 import React, {
   AnchorHTMLAttributes,
@@ -5,23 +12,9 @@ import React, {
   useEffect,
   useRef,
 } from 'react';
+import { BaseButtonProps } from './types';
 import { Wrap, WrapA } from './_styleButton';
 
-// 支持 primary、default、danger、link四种样式
-export type ButtonType = 'primary' | 'default' | 'danger' | 'link';
-// 支持large、small
-export type ButtonSize = 'large' | 'small';
-// 支持边框模式
-export type ButtonOutLine = 'outline';
-interface BaseButtonProps {
-  className: string;
-  disabled: boolean;
-  size: ButtonSize;
-  btnType: ButtonType;
-  children: React.ReactNode;
-  href: string;
-  variant: ButtonOutLine;
-}
 //Partial 的作用就是可以将某个类型里的属性全部变为可选项 ?
 export type ButtonProps = Partial<
   BaseButtonProps &
@@ -29,7 +22,8 @@ export type ButtonProps = Partial<
     ButtonHTMLAttributes<HTMLButtonElement> &
     AnchorHTMLAttributes<HTMLAnchorElement>
 >;
-const Button: React.FC<ButtonProps> = (props) => {
+
+const Button: React.FC<BaseButtonProps> = (props) => {
   const {
     className,
     disabled = false,

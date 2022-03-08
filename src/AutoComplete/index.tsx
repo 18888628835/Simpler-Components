@@ -11,23 +11,10 @@ import Input, { InputProps } from '../Input';
 import classnames from 'classnames';
 import 'animate.css';
 import Spin from '../Spin';
+import { BaseAutoCompleteProps, DataSourceType } from './types';
 
-// 需要筛选的数据item 项目必须包含 value 属性
-interface DataSourceObj {
-  value: string;
-}
-// 泛型，包含 value:string 属性的对象，其他属性不限
-export type DataSourceType<T = {}> = T & DataSourceObj;
-
-// 基础 props
-type BaseAutoCompleteProps = {
-  onSelect?: (e?: any) => void;
-  filterOption: (str: string) => DataSourceType[] | Promise<DataSourceType[]>;
-  empty?: boolean;
-  renderOption?: (value: string) => ReactElement;
-};
 //  基础 props 加 inputProps，本组件需要支持 Input组件 的属性
-export type AutoCompleteProps = BaseAutoCompleteProps & InputProps;
+type AutoCompleteProps = BaseAutoCompleteProps & InputProps;
 
 const AutoComplete: React.FC<AutoCompleteProps> = (props) => {
   const { onSelect, value, empty, filterOption, renderOption, ...restProps } =

@@ -11,13 +11,13 @@ export default () => (
     <Alert>default</Alert>
     <br />
 
-    <Alert model="success">success</Alert>
+    <Alert mode="success">success</Alert>
     <br />
 
-    <Alert model="danger">danger</Alert>
+    <Alert mode="danger">danger</Alert>
     <br />
 
-    <Alert model="warning">warning</Alert>
+    <Alert mode="warning">warning</Alert>
   </div>
 );
 ```
@@ -33,17 +33,17 @@ export default () => (
     <Alert variant="outline">outline</Alert>
     <br />
 
-    <Alert variant="outline" model="success">
+    <Alert variant="outline" mode="success">
       outline success
     </Alert>
     <br />
 
-    <Alert variant="outline" model="danger">
+    <Alert variant="outline" mode="danger">
       outline danger
     </Alert>
     <br />
 
-    <Alert variant="outline" model="warning">
+    <Alert variant="outline" mode="warning">
       outline warning
     </Alert>
   </div>
@@ -61,17 +61,17 @@ export default () => (
     <Alert variant="filled">filled</Alert>
     <br />
 
-    <Alert variant="filled" model="success">
+    <Alert variant="filled" mode="success">
       filled success
     </Alert>
     <br />
 
-    <Alert variant="filled" model="danger">
+    <Alert variant="filled" mode="danger">
       filled danger
     </Alert>
     <br />
 
-    <Alert variant="filled" model="warning">
+    <Alert variant="filled" mode="warning">
       filled warning
     </Alert>
   </div>
@@ -89,12 +89,12 @@ export default () => (
     <Alert closed>default</Alert>
     <br />
 
-    <Alert variant="filled" model="success" closed>
+    <Alert variant="filled" mode="success" closed>
       filled success
     </Alert>
     <br />
 
-    <Alert variant="outline" model="danger" closed>
+    <Alert variant="outline" mode="danger" closed>
       outline danger
     </Alert>
   </div>
@@ -113,17 +113,17 @@ import { Alert } from 'Simpler-Components';
 
 export default () => (
   <div>
-    <Alert title="hello world" model="success" closed>
+    <Alert title="hello world" mode="success" closed>
       success
     </Alert>
     <br />
 
-    <Alert variant="filled" model="danger" closed title="危险">
+    <Alert variant="filled" mode="danger" closed title="危险">
       filled danger
     </Alert>
     <br />
 
-    <Alert variant="outline" model="warning" title="警告" closed>
+    <Alert variant="outline" mode="warning" title="警告" closed>
       warning
     </Alert>
   </div>
@@ -140,7 +140,7 @@ export default () => (
   <div>
     <Alert
       title="hello world"
-      model="success"
+      mode="success"
       onClick={() => {
         alert('hello');
       }}
@@ -151,7 +151,7 @@ export default () => (
 
     <Alert
       title="hello world"
-      model="danger"
+      mode="danger"
       closed
       variant="filled"
       onClick={() => {
@@ -175,7 +175,7 @@ export default () => (
     <Alert
       style={{ width: '250px' }}
       title="hello world"
-      model="success"
+      mode="success"
       variant="outline"
       onClick={() => {
         alert('hello');
@@ -186,3 +186,5 @@ export default () => (
   </div>
 );
 ```
+
+<API src='src/Alert'></API>

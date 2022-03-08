@@ -154,3 +154,5 @@ export default () => {
 ```
 
 > 当与 Alert 组件混合使用时，可以控制 Alert 组件在页面中挂载或者卸载
+
+<API src='src/Transition'></API>

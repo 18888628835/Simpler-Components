@@ -1,3 +1,11 @@
+<!--
+ * @Author: 邱彦兮
+ * @Date: 2021-10-12 14:05:44
+ * @LastEditors: 邱彦兮
+ * @LastEditTime: 2022-03-08 23:11:02
+ * @FilePath: /Simpler-Components/docs/Spin.md
+-->
+
 # Spin 加载中
 
 ## 基础样式
@@ -48,3 +56,5 @@ export default () => {
   );
 };
 ```
+
+<API src='src/Spin'></API>
