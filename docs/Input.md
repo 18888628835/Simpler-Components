@@ -2,7 +2,7 @@
  * @Author: 邱彦兮
  * @Date: 2021-10-12 15:22:55
  * @LastEditors: 邱彦兮
- * @LastEditTime: 2022-03-08 22:33:05
+ * @LastEditTime: 2022-03-16 16:57:26
  * @FilePath: /Simpler-Components/docs/Input.md
 -->
 
@@ -98,4 +98,4 @@ export default () => {
 };
 ```
 
-<API src='src/Input/dummy'></API>
+<API src='src/Input'></API>

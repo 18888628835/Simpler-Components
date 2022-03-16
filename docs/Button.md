@@ -126,4 +126,4 @@ export default () => (
 );
 ```
 
-<API src='src/Button/dummy'></API>
+<API src='src/Button'></API>

@@ -2,7 +2,7 @@
  * @Author: 邱彦兮
  * @Date: 2021-10-12 11:11:55
  * @LastEditors: 邱彦兮
- * @LastEditTime: 2022-03-09 00:12:16
+ * @LastEditTime: 2022-03-16 16:49:17
  * @FilePath: /Simpler-Components/src/Button/index.tsx
  */
 import classnames from 'classnames';
@@ -19,8 +19,8 @@ import { Wrap, WrapA } from './_styleButton';
 export type ButtonProps = Partial<
   BaseButtonProps &
     // React提供的元素属性
-    ButtonHTMLAttributes<HTMLButtonElement> &
-    AnchorHTMLAttributes<HTMLAnchorElement>
+    Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'disabled'> &
+    Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>
 >;
 
 const Button: React.FC<ButtonProps> = (props) => {

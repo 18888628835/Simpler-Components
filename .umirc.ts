@@ -2,7 +2,7 @@
  * @Author: 邱彦兮
  * @Date: 2021-10-12 10:16:35
  * @LastEditors: 邱彦兮
- * @LastEditTime: 2022-03-16 16:08:48
+ * @LastEditTime: 2022-03-16 16:24:20
  * @FilePath: /Simpler-Components/.umirc.ts
  */
 import { defineConfig } from 'dumi';
@@ -19,9 +19,9 @@ export default defineConfig({
   apiParser: {
     propFilter: {
       // 是否忽略从 node_modules 继承的属性，默认值为 false
-      skipNodeModules: false,
+      skipNodeModules: true,
       // 需要忽略的属性名列表，默认为空数组
-      skipPropsWithName: ['title'],
+      skipPropsWithName: [],
       // 是否忽略没有文档说明的属性，默认值为 false
       skipPropsWithoutDoc: false,
     },

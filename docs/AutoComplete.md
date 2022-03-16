@@ -129,4 +129,4 @@ export default () => {
 };
 ```
 
-<API src='src/AutoComplete/dummy'></API>
+<API src='src/AutoComplete'></API>
