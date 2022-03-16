@@ -2,7 +2,7 @@
  * @Author: 邱彦兮
  * @Date: 2021-10-12 10:16:35
  * @LastEditors: 邱彦兮
- * @LastEditTime: 2021-12-23 23:41:42
+ * @LastEditTime: 2022-03-16 16:08:48
  * @FilePath: /Simpler-Components/.umirc.ts
  */
 import { defineConfig } from 'dumi';
@@ -15,6 +15,16 @@ export default defineConfig({
   outputPath: 'docs-dist',
   alias: {
     src: './src',
+  },
+  apiParser: {
+    propFilter: {
+      // 是否忽略从 node_modules 继承的属性，默认值为 false
+      skipNodeModules: false,
+      // 需要忽略的属性名列表，默认为空数组
+      skipPropsWithName: ['title'],
+      // 是否忽略没有文档说明的属性，默认值为 false
+      skipPropsWithoutDoc: false,
+    },
   },
   // more config: https://d.umijs.org/config
   base: '/Simpler-Components',
