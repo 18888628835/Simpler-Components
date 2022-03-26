@@ -2,7 +2,7 @@
  * @Author: 邱彦兮
  * @Date: 2022-03-25 22:12:24
  * @LastEditors: 邱彦兮
- * @LastEditTime: 2022-03-26 10:33:51
+ * @LastEditTime: 2022-03-26 12:13:01
  * @FilePath: /Simpler-Components/src/scroll_list/index.tsx
  */
 
@@ -10,7 +10,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import $ from 'jquery';
 import { ScrollListProps } from './types';
 import Wrap from './style';
-import { throttle } from '@/utils/helper';
 import classNames from 'classnames';
 
 const ScrollList: React.FC<ScrollListProps> = (props) => {
@@ -24,23 +23,10 @@ const ScrollList: React.FC<ScrollListProps> = (props) => {
     delay = 3000,
   } = props;
 
-  const [rowHeight, setRowHeight] = useState(15);
-  const [trigger, setTrigger] = useState(true);
+  const [rowHeight, setRowHeight] = useState(0);
   const timer = useRef<any>();
-  function setScrolling() {
-    setTrigger(!trigger);
-  }
-  useEffect(() => {
-    //设置单行高度
-    let ele = document.querySelector('.fancy_scroll_list_body');
-    let totalHeight = ele?.getBoundingClientRect().height!;
-    let height = totalHeight / rowCount;
-    setRowHeight(height);
-  }, []);
-
-  useEffect(() => {
-    let ele = document.querySelector('.fancy_scroll_list_body');
-    //设置滚动
+  //设置滚动
+  function setScrolling(rowHeight) {
     $('.fancy_scroll_list_body').animate(
       { marginTop: -rowHeight + 'px' },
       600,
@@ -51,26 +37,27 @@ const ScrollList: React.FC<ScrollListProps> = (props) => {
         );
       },
     );
-
-    timer.current = setTimeout(() => {
-      setScrolling();
-      _clearTimeout();
+  }
+  useEffect(() => {
+    //设置单行高度
+    let ele = document.querySelector('.fancy_scroll_list_body');
+    let totalHeight = ele?.getBoundingClientRect().height!;
+    let height = totalHeight / rowCount;
+    setRowHeight(height);
+    //轮播滚动
+    timer.current = setInterval(() => {
+      setScrolling(height);
     }, delay);
-
-    let _clearTimeout = () => {
+    ele?.addEventListener('mouseenter', () => {
       clearTimeout(timer.current);
-    };
+    });
 
-    let _setScrolling = throttle(setScrolling, delay / 2);
-    ele?.addEventListener('mouseenter', _clearTimeout, { once: true });
-    ele?.addEventListener('mouseleave', _setScrolling, { once: true });
-
-    return () => {
-      ele?.removeEventListener('mouseenter', _clearTimeout);
-      ele?.removeEventListener('mouseleave', _setScrolling);
-      _clearTimeout();
-    };
-  }, [trigger]);
+    ele?.addEventListener('mouseleave', () => {
+      timer.current = setInterval(() => {
+        setScrolling(height);
+      }, delay);
+    });
+  }, []);
 
   const classes = classNames('fancy_scroll_list_body');
   return (
