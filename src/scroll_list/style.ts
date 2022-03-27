@@ -2,7 +2,7 @@
  * @Author: 邱彦兮
  * @Date: 2022-03-26 09:13:06
  * @LastEditors: 邱彦兮
- * @LastEditTime: 2022-03-26 09:13:06
+ * @LastEditTime: 2022-03-27 13:33:18
  * @FilePath: /Simpler-Components/src/scroll_list/style.ts
  */
 import styled from 'styled-components';

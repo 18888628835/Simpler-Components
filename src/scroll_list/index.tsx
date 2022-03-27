@@ -2,7 +2,7 @@
  * @Author: 邱彦兮
  * @Date: 2022-03-25 22:12:24
  * @LastEditors: 邱彦兮
- * @LastEditTime: 2022-03-26 12:13:01
+ * @LastEditTime: 2022-03-27 13:41:48
  * @FilePath: /Simpler-Components/src/scroll_list/index.tsx
  */
 
@@ -20,43 +20,49 @@ const ScrollList: React.FC<ScrollListProps> = (props) => {
     headerColor = 'rgb(0, 186, 255)',
     dataSource = [],
     columns = [],
-    delay = 3000,
+    delay = 2000,
   } = props;
 
   const [rowHeight, setRowHeight] = useState(0);
   const timer = useRef<any>();
-  //设置滚动
-  function setScrolling(rowHeight) {
-    $('.fancy_scroll_list_body').animate(
-      { marginTop: -rowHeight + 'px' },
-      600,
-      () => {
-        $('.fancy_scroll_list_body').css({ marginTop: 0 });
-        $('.fancy_scroll_list_body>div:first-child').appendTo(
-          $('.fancy_scroll_list_body'),
-        );
-      },
-    );
-  }
+
   useEffect(() => {
     //设置单行高度
     let ele = document.querySelector('.fancy_scroll_list_body');
     let totalHeight = ele?.getBoundingClientRect().height!;
-    let height = totalHeight / rowCount;
-    setRowHeight(height);
-    //轮播滚动
-    timer.current = setInterval(() => {
-      setScrolling(height);
-    }, delay);
-    ele?.addEventListener('mouseenter', () => {
-      clearTimeout(timer.current);
-    });
+    let _rowHeight = totalHeight / rowCount;
+    setRowHeight(_rowHeight);
 
-    ele?.addEventListener('mouseleave', () => {
-      timer.current = setInterval(() => {
-        setScrolling(height);
-      }, delay);
-    });
+    //设置动画
+    function setAnimation(rowHeight) {
+      $('.fancy_scroll_list_body').animate(
+        { marginTop: -rowHeight + 'px' },
+        600,
+        () => {
+          $('.fancy_scroll_list_body').css({ marginTop: 0 });
+          $('.fancy_scroll_list_body>div:first-child').appendTo(
+            $('.fancy_scroll_list_body'),
+          );
+        },
+      );
+    }
+    //轮播滚动
+    const _setScroll = () => {
+      timer.current = setInterval(setAnimation, delay, _rowHeight);
+    };
+    //清除定时器
+    const _clearTimeout = () => {
+      clearTimeout(timer.current);
+    };
+
+    _setScroll();
+    ele?.addEventListener('mouseenter', _clearTimeout);
+    ele?.addEventListener('mouseleave', _setScroll);
+    return () => {
+      _clearTimeout();
+      ele?.removeEventListener('mouseenter', _clearTimeout);
+      ele?.removeEventListener('mouseleave', _setScroll);
+    };
   }, []);
 
   const classes = classNames('fancy_scroll_list_body');
