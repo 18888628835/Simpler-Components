@@ -2,7 +2,7 @@
  * @Author: 邱彦兮
  * @Date: 2021-10-12 10:16:35
  * @LastEditors: 邱彦兮
- * @LastEditTime: 2022-03-25 22:13:49
+ * @LastEditTime: 2022-04-10 08:24:50
  * @FilePath: /Simpler-Components/src/index.ts
  */
 export { default as Alert } from './Alert';
@@ -22,3 +22,4 @@ export { default as Progress } from './Progress';
 export { default as Table } from './Table';
 export { default as BackToTop } from './BackToTop';
 export { default as ScrollList } from './scroll_list';
+export { default as VTable } from './v-table';
