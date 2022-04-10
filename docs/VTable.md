@@ -2,7 +2,7 @@
  * @Author: 邱彦兮
  * @Date: 2022-04-10 08:20:14
  * @LastEditors: 邱彦兮
- * @LastEditTime: 2022-04-10 14:20:18
+ * @LastEditTime: 2022-04-10 14:49:02
  * @FilePath: /Simpler-Components/docs/VTable.md
 -->
 
@@ -41,7 +41,7 @@ for (let i = 0; i < 10000; i++) {
 }
 export default () => {
   return (
-    <div style={{ height: '500px' }}>
+    <div style={{ height: '500px', maxWidth: '800px' }}>
       <VTable dataSource={data} columns={columns} />
     </div>
   );
@@ -99,7 +99,7 @@ for (let i = 0; i < 2000; i++) {
 }
 export default () => {
   return (
-    <div style={{ height: '500px' }}>
+    <div style={{ height: '500px', maxWidth: '800px' }}>
       <VTable dataSource={data} columns={columns} />
     </div>
   );
@@ -140,7 +140,7 @@ for (let i = 0; i < 2000; i++) {
 }
 export default () => {
   return (
-    <div style={{ height: '500px' }}>
+    <div style={{ height: '500px', maxWidth: '800px' }}>
       <VTable dataSource={data} columns={columns} rowCount={20} />
     </div>
   );
@@ -189,7 +189,7 @@ for (let i = 0; i < 2000; i++) {
 }
 export default () => {
   return (
-    <div style={{ height: '500px' }}>
+    <div style={{ height: '500px', maxWidth: '800px' }}>
       <VTable dataSource={data} columns={columns} />
     </div>
   );

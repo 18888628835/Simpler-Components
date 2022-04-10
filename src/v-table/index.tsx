@@ -2,7 +2,7 @@
  * @Author: 邱彦兮
  * @Date: 2022-04-10 08:19:53
  * @LastEditors: 邱彦兮
- * @LastEditTime: 2022-04-10 14:21:54
+ * @LastEditTime: 2022-04-10 14:50:45
  * @FilePath: /Simpler-Components/src/v-table/index.tsx
  */
 
@@ -155,6 +155,7 @@ const VTable: React.FC<VTableProps> = (props) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const onScroll = function (e: React.UIEvent<HTMLDivElement, UIEvent>) {
+    e.stopPropagation();
     if (ref.current === e.target) {
       let _startIndex = Math.floor(ref.current.scrollTop / rowHeight);
       let _endIndex = _startIndex + rowCount;
