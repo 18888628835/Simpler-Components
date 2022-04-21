@@ -2,7 +2,7 @@
  * @Author: 邱彦兮
  * @Date: 2021-10-12 10:16:35
  * @LastEditors: 邱彦兮
- * @LastEditTime: 2022-04-10 08:24:50
+ * @LastEditTime: 2022-04-21 17:23:46
  * @FilePath: /Simpler-Components/src/index.ts
  */
 export { default as Alert } from './Alert';
@@ -23,3 +23,4 @@ export { default as Table } from './Table';
 export { default as BackToTop } from './BackToTop';
 export { default as ScrollList } from './scroll_list';
 export { default as VTable } from './v-table';
+export { default as ResizableBox } from './resizable-box';
