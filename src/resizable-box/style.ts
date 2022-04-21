@@ -4,7 +4,7 @@ import styled from 'styled-components';
  * @Author: 邱彦兮
  * @Date: 2022-04-21 16:51:25
  * @LastEditors: 邱彦兮
- * @LastEditTime: 2022-04-21 23:03:38
+ * @LastEditTime: 2022-04-21 23:47:05
  * @FilePath: /Simpler-Components/src/Resizable-box/style.ts
  */
 export const Wrap = styled.div`

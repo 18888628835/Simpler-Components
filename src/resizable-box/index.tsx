@@ -2,7 +2,7 @@
  * @Author: 邱彦兮
  * @Date: 2022-04-21 16:49:42
  * @LastEditors: 邱彦兮
- * @LastEditTime: 2022-04-21 23:09:52
+ * @LastEditTime: 2022-04-21 23:48:13
  * @FilePath: /Simpler-Components/src/Resizable-box/index.tsx
  */
 import React, { useEffect, useRef, useCallback, useState } from 'react';
@@ -21,9 +21,8 @@ type Direction =
 const ResizableBox = (props) => {
   let { minWidth = 30, minHeight = 30 } = props;
   const box = useRef<HTMLDivElement | null>(null);
-  const canResize = useRef(false);
   const direction = useRef('');
-  const style = useRef({
+  const rectProperties = useRef({
     left: 0,
     top: 0,
     width: 0,
@@ -35,8 +34,13 @@ const ResizableBox = (props) => {
   });
 
   const onMouseDown = useCallback((currentDirection: Direction) => {
-    let { left, top, width, height, right, bottom } =
-      box.current!.getBoundingClientRect();
+    let [left, top, width, height] = [
+      box.current?.offsetLeft!,
+      box.current?.offsetTop!,
+      box.current?.offsetWidth!,
+      box.current?.offsetHeight!,
+    ];
+    let [right, bottom] = [left + width, top + height];
     let pointX, pointY;
     switch (currentDirection) {
       case 'left_top':
@@ -69,16 +73,23 @@ const ResizableBox = (props) => {
         pointX = right;
         break;
     }
-    style.current = { left, top, width, height, pointX, pointY, right, bottom };
+    rectProperties.current = {
+      left,
+      top,
+      width,
+      height,
+      pointX,
+      pointY,
+      right,
+      bottom,
+    };
     direction.current = currentDirection;
-    canResize.current = true;
+    document.addEventListener('mousemove', onMouseMove);
   }, []);
   const onMouseMove = useCallback((e) => {
-    if (!canResize.current) return;
-
-    let { left, top, width, height, right, bottom } = style.current;
-    let offsetX = style.current.pointX - e.pageX;
-    let offsetY = style.current.pointY - e.pageY;
+    let { left, top, width, height, right, bottom } = rectProperties.current;
+    let offsetX = rectProperties.current.pointX - e.pageX;
+    let offsetY = rectProperties.current.pointY - e.pageY;
 
     switch (direction.current) {
       case 'left_top':
@@ -123,14 +134,12 @@ const ResizableBox = (props) => {
   }, []);
 
   const onMouseUp = useCallback(() => {
-    canResize.current = false;
+    document.removeEventListener('mousemove', onMouseMove);
   }, []);
 
   useEffect(() => {
-    document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
     return () => {
-      document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
   }, []);
