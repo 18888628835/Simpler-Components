@@ -1,12 +1,12 @@
-/*
- * @Author: 邱彦兮
- * @Date: 2022-04-21 16:49:42
- * @LastEditors: 邱彦兮
- * @LastEditTime: 2022-04-22 10:42:53
- * @FilePath: /Simpler-Components/src/Resizable-box/index.tsx
- */
 import { getCoords } from '@/utils/helper';
-import React, { useEffect, useRef, useCallback, FC } from 'react';
+import classNames from 'classnames';
+import React, {
+  useEffect,
+  useRef,
+  useCallback,
+  useState,
+  useMemo,
+} from 'react';
 import { Wrap } from './style';
 
 type Direction =
@@ -21,25 +21,31 @@ type Direction =
 
 interface ResizableBoxProps {
   /**
-   * @default false
-   * @description 是否隐藏
-   */
-  hidden: boolean;
-  /**
    * @default 20
    * @description  盒子收缩后最小宽度
    */
-  minWidth: number;
+  minWidth?: number;
   /**
    * @default 20
    * @description  盒子收缩后最小高度
    */
-  minHeight: number;
+  minHeight?: number;
+  /**
+   * @default  { width: 50px, height: 50px}
+   * @description 背景颜色
+   */
+  style?: React.CSSProperties;
 }
-const ResizableBox: FC<ResizableBoxProps> = (props) => {
-  let { minWidth = 20, minHeight = 20, hidden = false } = props;
+const ResizableBox: React.FC<ResizableBoxProps> = (props) => {
+  let {
+    minWidth = 20,
+    minHeight = 20,
+    style = { width: '50px', height: '50px' },
+  } = props;
+  const [allowResize, setAllowResize] = useState(false);
   const box = useRef<HTMLDivElement | null>(null);
   const direction = useRef('');
+  // 用来记录鼠标点下去时元素的属性值
   const propertiesRecord = useRef({
     left: 0,
     top: 0,
@@ -126,33 +132,50 @@ const ResizableBox: FC<ResizableBoxProps> = (props) => {
     document.removeEventListener('mousemove', onMouseMove);
   }, []);
 
+  const onChecked = useCallback(() => setAllowResize(true), []);
+
+  const onCancelChecked = useCallback((e) => {
+    const isChild = box.current!.contains(e.target);
+    if (!isChild) {
+      setAllowResize(false);
+    }
+  }, []);
+
   useEffect(() => {
     document.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('click', onCancelChecked);
     return () => {
       document.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('click', onCancelChecked);
     };
   }, []);
 
+  const classes = useMemo(() => {
+    return classNames('resizable_box', { dashed_border: allowResize });
+  }, [allowResize]);
+
   return (
-    <Wrap hidden={hidden}>
-      <div className="resizable_box" ref={box}>
-        {[
-          'left_top',
-          'left_bottom',
-          'right_top',
-          'right_bottom',
-          'top',
-          'bottom',
-          'left',
-          'right',
-        ].map((item) => (
-          <div
-            key={item}
-            className={`rect rect_${item}`}
-            onMouseDown={(e) => onMouseDown(e, item as Direction)}
-          ></div>
-        ))}
-      </div>
+    <Wrap
+      className={classes}
+      ref={box}
+      onClick={onChecked}
+      style={{ ...style }}
+    >
+      {['left_top', 'left_bottom', 'right_top', 'right_bottom'].map((item) => (
+        <div
+          key={item}
+          className={allowResize ? `circle circle_${item}` : ''}
+          onMouseDown={(e) => onMouseDown(e, item as Direction)}
+        ></div>
+      ))}
+      {['top', 'bottom', 'left', 'right'].map((item) => (
+        <div
+          key={item}
+          className={allowResize ? `rect rect_${item}` : ''}
+          onMouseDown={(e) => onMouseDown(e, item as Direction)}
+        ></div>
+      ))}
+      <div className="content">{props.children}</div>
     </Wrap>
   );
 };

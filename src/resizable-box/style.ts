@@ -1,80 +1,89 @@
 import styled from 'styled-components';
 
-/*
- * @Author: 邱彦兮
- * @Date: 2022-04-21 16:51:25
- * @LastEditors: 邱彦兮
- * @LastEditTime: 2022-04-21 23:47:05
- * @FilePath: /Simpler-Components/src/Resizable-box/style.ts
- */
 export const Wrap = styled.div`
-  .resizable_box {
-    width: 200px;
-    height: 200px;
+  &.resizable_box {
     position: absolute;
+    z-index: 0;
+    border: 1px dashed transparent;
+    cursor: default;
   }
-  .rect {
+  &.dashed_border {
+    border: 1px dashed rgba(6, 123, 239, 1);
+  }
+
+  .circle {
     width: 8px;
     height: 8px;
+    border-radius: 50%;
     position: absolute;
-    border: 1px solid rgb(6, 123, 239);
+    border: 1px solid rgba(6, 123, 239, 1);
     background-color: white;
-  }
-  .rect_left_top {
-    left: 0;
-    top: 0;
-    transform: translate(-25%, -25%);
-    cursor: nwse-resize;
-  }
-  .rect_left_bottom {
-    left: 0;
-    bottom: 0;
-    transform: translate(-25%, 25%);
-    cursor: nesw-resize;
-  }
-  .rect_right_top {
-    right: 0;
-    top: 0;
-    transform: translate(25%, -25%);
-    cursor: nesw-resize;
-  }
-  .rect_right_bottom {
-    right: 0;
-    bottom: 0;
-    transform: translate(25%, 25%);
-    cursor: nwse-resize;
-  }
-  .rect_left_top,
-  .rect_left_bottom,
-  .rect_right_top,
-  .rect_right_bottom {
     z-index: 10;
   }
-  .rect_top {
-    height: 1px;
+  .circle_left_top {
+    left: 0;
+    top: 0;
+    transform: translate(-50%, -50%);
+    cursor: nwse-resize;
+  }
+  .circle_left_bottom {
+    left: 0;
+    bottom: 0;
+    transform: translate(-50%, 50%);
+    cursor: nesw-resize;
+  }
+  .circle_right_top {
+    right: 0;
+    top: 0;
+    transform: translate(50%, -50%);
+    cursor: nesw-resize;
+  }
+  .circle_right_bottom {
+    right: 0;
+    bottom: 0;
+    transform: translate(50%, 50%);
+    cursor: nwse-resize;
+  }
+
+  .rect {
+    z-index: 8;
     width: 100%;
-    top: -1px;
-    transform: translateY(1px);
+    height: 100%;
+    position: absolute;
+  }
+  .rect_top,
+  .rect_bottom {
+    height: 6px;
+  }
+  .rect_top {
+    top: 0px;
+    transform: translateY(-50%);
     cursor: ns-resize;
   }
   .rect_bottom {
-    bottom: -1px;
-    height: 1px;
-    width: 100%;
+    bottom: 0px;
+    transform: translateY(50%);
     cursor: ns-resize;
   }
+  .rect_left,
+  .rect_right {
+    width: 6px;
+  }
   .rect_left {
-    width: 1px;
-    height: 100%;
-    left: -1px;
+    left: 0;
     cursor: ew-resize;
-    transform: translateX(1px);
+    transform: translateX(-50%);
   }
   .rect_right {
-    width: 1px;
-    height: 100%;
-    right: -1px;
+    right: 0;
+    top: 0;
     cursor: ew-resize;
-    transform: translateX(-1px);
+    border-radius: 0;
+    transform: translateX(50%);
+  }
+  .content {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
   }
 `;
