@@ -125,7 +125,7 @@ export default () => {
 ## relative
 
 此组件默认相对于 document 移动，如果父容器设置了 position:relative 等定位，则需要将 relative 设置为 true。
-此时 limit 更方便设置。
+此时请按照父盒子的宽高设置 limit。
 
 ```tsx
 import React, { useState } from 'react';
