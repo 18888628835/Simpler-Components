@@ -35,7 +35,7 @@ export type LimitProps = {
 
 interface BaseResizableBoxProps {
   /**
-   * @description  限制位移
+   * @description  限制位移界限的坐标值
    */
   limit: LimitProps;
   /**
@@ -49,10 +49,19 @@ interface BaseResizableBoxProps {
   onChange: (rect: RectProps) => void;
   /**
    * @default false
-   * @argument 是否相对于父盒子
-   * @description 默认相对于 document，如果需要相对于父盒子，请设置为 true
+   * @description   默认移动位置时相对于 document，如果需要相对于父盒子，请设置为 true
    */
   relative: boolean;
+  /**
+   * @default 10
+   * @description 最小宽度
+   */
+  minWidth: number;
+  /**
+   * @default 10
+   * @description 最小高度
+   */
+  minHeight: number;
 }
 
 type ResizableBoxProps = Partial<
@@ -62,8 +71,17 @@ type ResizableBoxProps = Partial<
 const ResizableBox: React.FC<React.PropsWithChildren<ResizableBoxProps>> = (
   props,
 ) => {
-  let { style, className, onChange, limit, relative, rect, ...restProps } =
-    props;
+  let {
+    style,
+    className,
+    onChange,
+    limit,
+    relative,
+    rect,
+    minWidth = 20,
+    minHeight = 20,
+    ...restProps
+  } = props;
   const [allowResize, setAllowResize] = useState(false);
   const box = useRef<HTMLDivElement | null>(null);
   const [rectAttr, setRectAttr] = useState<RectProps>({} as RectProps);
@@ -105,13 +123,13 @@ const ResizableBox: React.FC<React.PropsWithChildren<ResizableBoxProps>> = (
       let { offsetX, offsetY, shiftX, shiftY } = offsetInfo;
       switch (direction.current) {
         case 'left_top':
-          left = left - offsetX;
-          top = top - offsetY;
+          left = Math.min(left + width - minWidth, left - offsetX);
+          top = Math.min(top + height - minHeight, top - offsetY);
           width = width + offsetX;
           height = height + offsetY;
           break;
         case 'left_bottom':
-          left = left - offsetX;
+          left = Math.min(left + width - minWidth, left - offsetX);
           width = width + offsetX;
           height = height - offsetY;
           break;
@@ -125,15 +143,15 @@ const ResizableBox: React.FC<React.PropsWithChildren<ResizableBoxProps>> = (
           height = height - offsetY;
           break;
         case 'top':
+          top = Math.min(top + height - minHeight, top - offsetY);
           height = height + offsetY;
-          top = top - offsetY;
           break;
         case 'bottom':
           height = height - offsetY;
           break;
         case 'left':
+          left = Math.min(left + width - minWidth, left - offsetX);
           width = width + offsetX;
-          left = left - offsetX;
           break;
         case 'right':
           width = width - offsetX;
@@ -251,7 +269,17 @@ const ResizableBox: React.FC<React.PropsWithChildren<ResizableBoxProps>> = (
       calcRect = handleLimit(calcRect, limit);
     }
 
-    onChange ? onChange(calcRect) : setRectAttr(calcRect);
+    onChange
+      ? onChange({
+          ...calcRect,
+          width: Math.max(minWidth, calcRect.width),
+          height: Math.max(minHeight, calcRect.height),
+        })
+      : setRectAttr({
+          ...calcRect,
+          width: Math.max(minWidth, calcRect.width),
+          height: Math.max(minHeight, calcRect.height),
+        });
   }, []);
 
   const onMouseDown = useCallback(
