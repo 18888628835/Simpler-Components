@@ -68,7 +68,7 @@ const ResizableBox: React.FC<React.PropsWithChildren<ResizableBoxProps>> = (
   const box = useRef<HTMLDivElement | null>(null);
   const [rectAttr, setRectAttr] = useState<RectProps>({} as RectProps);
 
-  const direction = useRef('');
+  const direction = useRef<Direction>('left');
   // 用来记录鼠标点下去时元素的属性值
   const collector = useRef({
     left: 0,
@@ -83,192 +83,147 @@ const ResizableBox: React.FC<React.PropsWithChildren<ResizableBoxProps>> = (
     shiftY: 0,
   });
 
-  const onMouseMove = useCallback((e: MouseEvent) => {
-    let { left, top, width, height, pointX, pointY, shiftX, shiftY } =
-      collector.current;
-    let offsetX = pointX - e.pageX;
-    let offsetY = pointY - e.pageY;
+  /**
+   *
+   * @param collectorRect 当mousedown 时收集到的rect属性
+   * @param offsetInfo mousedown 时鼠标位置与 mousemove 时鼠标位置的偏移量、mousedown 时鼠标位置与盒子left 处、top 处的偏差值
+   * @param e 事件对象
+   * @returns 计算得出盒模型mousemove 后的left、width、top、height 结果
+   */
+  const handleCalcRect = useCallback(
+    (
+      collectorRect: RectProps,
+      offsetInfo: {
+        offsetX: number;
+        offsetY: number;
+        shiftX: number;
+        shiftY: number;
+      },
+      e: MouseEvent,
+    ): RectProps => {
+      let { left, top, width, height } = collectorRect;
+      let { offsetX, offsetY, shiftX, shiftY } = offsetInfo;
+      switch (direction.current) {
+        case 'left_top':
+          left = left - offsetX;
+          top = top - offsetY;
+          width = width + offsetX;
+          height = height + offsetY;
+          break;
+        case 'left_bottom':
+          left = left - offsetX;
+          width = width + offsetX;
+          height = height - offsetY;
+          break;
+        case 'right_top':
+          top = top - offsetY;
+          width = width - offsetX;
+          height = height + offsetY;
+          break;
+        case 'right_bottom':
+          width = width - offsetX;
+          height = height - offsetY;
+          break;
+        case 'top':
+          height = height + offsetY;
+          top = top - offsetY;
+          break;
+        case 'bottom':
+          height = height - offsetY;
+          break;
+        case 'left':
+          width = width + offsetX;
+          left = left - offsetX;
+          break;
+        case 'right':
+          width = width - offsetX;
+          break;
+        case 'content':
+          left = e.pageX - shiftX;
+          top = e.pageY - shiftY;
+          break;
+      }
+      return { width, height, left, top };
+    },
+    [],
+  );
 
-    switch (direction.current) {
-      case 'left_top':
-        left = left - offsetX;
-        top = top - offsetY;
-        width = width + offsetX;
-        height = height + offsetY;
-        break;
-      case 'left_bottom':
-        left = left - offsetX;
-        width = width + offsetX;
-        height = height - offsetY;
-        break;
-      case 'right_top':
-        top = top - offsetY;
-        width = width - offsetX;
-        height = height + offsetY;
-        break;
-      case 'right_bottom':
-        width = width - offsetX;
-        height = height - offsetY;
-        break;
-      case 'top':
-        height = height + offsetY;
-        top = top - offsetY;
-        break;
-      case 'bottom':
-        height = height - offsetY;
-        break;
-      case 'left':
-        width = width + offsetX;
-        left = left - offsetX;
-        break;
-      case 'right':
-        width = width - offsetX;
-        break;
-      case 'content':
-        left = e.pageX - shiftX;
-        top = e.pageY - shiftY;
-        break;
-    }
-
-    if (limit) {
-      if (!relative) {
-        switch (direction.current) {
-          case 'content':
-            if (left < limit.left) {
-              left = limit.left;
-            }
-            if (left > limit.right - width) {
-              left = limit.right - width;
-            }
-            if (top < limit.top) {
-              top = limit.top;
-            }
-            if (top > limit.bottom - height) {
-              top = limit.bottom - height;
-            }
-            break;
-          case 'left_top':
-            if (e.pageY < limit.top) {
-              top = limit.top;
-            }
-            if (e.pageX < limit.left) {
-              left = limit.left;
-            }
-            break;
-          case 'top':
-            if (e.pageY < limit.top) {
-              top = limit.top;
-            }
-            break;
-          case 'right_top':
-            if (e.pageY < limit.top) {
-              top = limit.top;
-            }
-            if (e.pageX > limit.right) {
-              left = Math.max(limit.left, left - (e.pageX - limit.right));
-            }
-            break;
-          case 'right':
-            if (e.pageX > limit.right) {
-              left = Math.max(limit.left, left - (e.pageX - limit.right));
-            }
-            break;
-          case 'right_bottom':
-            if (e.pageX > limit.right) {
-              left = Math.max(limit.left, left - (e.pageX - limit.right));
-            }
-            if (e.pageY > limit.bottom) {
-              top = Math.max(limit.top, top - (e.pageY - limit.bottom));
-            }
-            break;
-          case 'bottom':
-            if (e.pageY > limit.bottom) {
-              top = Math.max(limit.top, top - (e.pageY - limit.bottom));
-            }
-            break;
-          case 'left_bottom':
-            if (e.pageX < limit.left) {
-              left = limit.left;
-            }
-            if (e.pageY > limit.bottom) {
-              top = Math.max(limit.top, top - (e.pageY - limit.bottom));
-            }
-            break;
-          case 'left':
-            if (e.pageX < limit.left) {
-              left = limit.left;
-            }
-            break;
-        }
-      } else {
-        switch (direction.current) {
-          case 'content':
-            if (left < limit.left) {
-              left = limit.left;
-            }
-            if (left > limit.right - width) {
-              left = limit.right - width;
-            }
-            if (top < limit.top) {
-              top = limit.top;
-            }
-            if (top > limit.bottom - height) {
-              top = limit.bottom - height;
-            }
-            break;
-          case 'left_top':
-            if (top < limit.top) {
-              top = limit.top;
-            }
-            if (left < limit.left) {
-              left = limit.left;
-            }
-            break;
-          case 'top':
-            if (top < limit.top) {
-              top = limit.top;
-            }
-            break;
-          case 'right_top':
-            if (top < limit.top) {
-              top = limit.top;
-            }
-            if (width + left > limit.right) {
-              left = Math.max(limit.left, left - (width + left - limit.right));
-            }
-            break;
-          case 'right':
-            if (left + width > limit.right) {
-              left = Math.max(limit.left, left - (left + width - limit.right));
-            }
-            break;
-          case 'right_bottom':
-            if (left + width > limit.right) {
-              left = Math.max(limit.left, left - (left + width - limit.right));
-            }
-            if (top + height > limit.bottom) {
-              top = Math.max(limit.top, top - (top + height - limit.bottom));
-            }
-            break;
-          case 'bottom':
-            if (top + height > limit.bottom) {
-              top = Math.max(limit.top, top - (top + height - limit.bottom));
-            }
-            break;
-          case 'left_bottom':
-            if (left < limit.left) {
-              left = limit.left;
-            }
-            if (top + height > limit.bottom) {
-              top = Math.max(limit.top, top - (top + height - limit.bottom));
-            }
-            break;
-          case 'left':
-            if (left < limit.left) {
-              left = limit.left;
-            }
-            break;
-        }
+  /**
+   *
+   * @param rect mousemove 后的left、width、top、height 结果
+   * @param limit 用来限制拖动范围的界限坐标
+   * @returns  计算limit 条件限制后得出的left、width、top、height 结果
+   */
+  const handleLimit = useCallback(
+    (rect: RectProps, limit: LimitProps): RectProps => {
+      let { left, top, width, height } = rect;
+      switch (direction.current) {
+        case 'content':
+          if (left < limit.left) {
+            left = limit.left;
+          }
+          if (left > limit.right - width) {
+            left = limit.right - width;
+          }
+          if (top < limit.top) {
+            top = limit.top;
+          }
+          if (top > limit.bottom - height) {
+            top = limit.bottom - height;
+          }
+          break;
+        case 'left_top':
+          if (top < limit.top) {
+            top = limit.top;
+          }
+          if (left < limit.left) {
+            left = limit.left;
+          }
+          break;
+        case 'top':
+          if (top < limit.top) {
+            top = limit.top;
+          }
+          break;
+        case 'right_top':
+          if (top < limit.top) {
+            top = limit.top;
+          }
+          if (width + left > limit.right) {
+            left = Math.max(limit.left, left - (width + left - limit.right));
+          }
+          break;
+        case 'right':
+          if (left + width > limit.right) {
+            left = Math.max(limit.left, left - (left + width - limit.right));
+          }
+          break;
+        case 'right_bottom':
+          if (left + width > limit.right) {
+            left = Math.max(limit.left, left - (left + width - limit.right));
+          }
+          if (top + height > limit.bottom) {
+            top = Math.max(limit.top, top - (top + height - limit.bottom));
+          }
+          break;
+        case 'bottom':
+          if (top + height > limit.bottom) {
+            top = Math.max(limit.top, top - (top + height - limit.bottom));
+          }
+          break;
+        case 'left_bottom':
+          if (left < limit.left) {
+            left = limit.left;
+          }
+          if (top + height > limit.bottom) {
+            top = Math.max(limit.top, top - (top + height - limit.bottom));
+          }
+          break;
+        case 'left':
+          if (left < limit.left) {
+            left = limit.left;
+          }
+          break;
       }
       if (width > limit.right - limit.left) {
         width = limit.right - limit.left;
@@ -276,10 +231,27 @@ const ResizableBox: React.FC<React.PropsWithChildren<ResizableBoxProps>> = (
       if (height > limit.bottom - limit.top) {
         height = limit.bottom - limit.top;
       }
+      return { width, height, left, top };
+    },
+    [],
+  );
+
+  const onMouseMove = useCallback((e: MouseEvent) => {
+    let { left, top, width, height, pointX, pointY, shiftX, shiftY } =
+      collector.current;
+    let offsetX = pointX - e.pageX;
+    let offsetY = pointY - e.pageY;
+
+    let calcRect = handleCalcRect(
+      { left, top, width, height },
+      { offsetX, offsetY, shiftX, shiftY },
+      e,
+    );
+    if (limit) {
+      calcRect = handleLimit(calcRect, limit);
     }
 
-    let result = { left, top, width, height };
-    onChange ? onChange(result) : setRectAttr(result);
+    onChange ? onChange(calcRect) : setRectAttr(calcRect);
   }, []);
 
   const onMouseDown = useCallback(
