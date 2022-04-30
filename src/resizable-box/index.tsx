@@ -134,7 +134,7 @@ const ResizableBox: React.FC<React.PropsWithChildren<ResizableBoxProps>> = (
           height = height - offsetY;
           break;
         case 'right_top':
-          top = top - offsetY;
+          top = Math.min(top + height - minHeight, top - offsetY);
           width = width - offsetX;
           height = height + offsetY;
           break;
